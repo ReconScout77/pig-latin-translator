@@ -44,6 +44,17 @@ var consonantCount = function(word) {
   }
 };
 
+var isSpecial = function(thisWord) {
+  var parseLetters = wordToArray(thisWord);
+  for (var i = 0; i < parseLetters.length; i++) {
+    if (!isVowel(parseLetters[i]) && !isConsonant(parseLetters[i])) {
+      console.log(parseLetters[i]);
+      return true;
+    }
+  }
+  return false;
+};
+
 var translatePigLatinWord = function(inputWord) {
   var arrayWord = wordToArray(inputWord);
   var firstLetter = arrayWord[0];
@@ -67,7 +78,10 @@ var parseWords = function(inputString) {
 var translatePigLatin = function(longString) {
   arrayOfWords = parseWords(longString);
   for (var i = 0; i < arrayOfWords.length; i++) {
-    arrayOfWords[i] = translatePigLatinWord(arrayOfWords[i]);
+    console.log(isSpecial(arrayOfWords[i]));
+    if (!isSpecial(arrayOfWords[i])) {
+      arrayOfWords[i] = translatePigLatinWord(arrayOfWords[i]);
+    }
   }
 
   return arrayOfWords.join(" ");
