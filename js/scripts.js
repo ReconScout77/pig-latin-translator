@@ -1,19 +1,23 @@
-var vowels = ["a", "e", "i", "o", "u"];
-var consonants = ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z"];
+var vowelsLower = ["a", "e", "i", "o", "u"];
 
+var vowels = [];
+vowels = vowelsLower.slice();
+for (var i = 0; i < vowelsLower.length; i++) {
+  vowels.push(vowelsLower[i].toUpperCase());
+}
+
+var consonantsLower = ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z"];
+
+var consonants = [];
+consonants = consonantsLower.slice();
+for (var i = 0; i < consonantsLower.length; i++) {
+  consonants.push(consonantsLower[i].toUpperCase());
+}
 
 var wordToArray = function(word) {
   return word.split("");
 };
 
-/* 1
-we need to turn the string into an array of letters
-figure out whether the first letter is a vowel or not
-
-  2
-figure out if it is a consonant
-check for consonants until we hit a vowel
-*/
 var isVowel = function(letter) {
   for (var i = 0; i < vowels.length; i++) {
     if (letter === vowels[i]) {
@@ -40,7 +44,7 @@ var consonantCount = function(word) {
   }
 };
 
-var translatePigLatin = function(inputWord) {
+var translatePigLatinWord = function(inputWord) {
   var arrayWord = wordToArray(inputWord);
   var firstLetter = arrayWord[0];
 
@@ -49,11 +53,24 @@ var translatePigLatin = function(inputWord) {
     return vowelTranslation.join("");
   }
   else if (isConsonant(firstLetter)) {
-    var conTranslation = arrayWord.splice(1, arrayWord.length);
-    console.log(conTranslation);
-    conTranslation = conTranslation.concat("-" + firstLetter + "ay");
+    var initialConCount = consonantCount(arrayWord);
+    var conTranslation = arrayWord.splice(initialConCount, arrayWord.length);
+    conTranslation = conTranslation.concat("-" + arrayWord.join("") + "ay");
     return conTranslation.join("");
   }
+};
+
+var parseWords = function(inputString) {
+  return inputString.split(" ");
+};
+
+var translatePigLatin = function(longString) {
+  arrayOfWords = parseWords(longString);
+  for (var i = 0; i < arrayOfWords.length; i++) {
+    arrayOfWords[i] = translatePigLatinWord(arrayOfWords[i]);
+  }
+
+  return arrayOfWords.join(" ");
 };
 
 $(function() {
