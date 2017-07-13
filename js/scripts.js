@@ -48,16 +48,28 @@ var isSpecial = function(thisWord) {
   var parseLetters = wordToArray(thisWord);
   for (var i = 0; i < parseLetters.length; i++) {
     if (!isVowel(parseLetters[i]) && !isConsonant(parseLetters[i])) {
-      console.log(parseLetters[i]);
       return true;
     }
   }
   return false;
 };
 
+var checkPunctuation = function(word) {
+  console.log(word);
+  var lastLetter = word[word.length - 1];
+  console.log(lastLetter);
+  if (!isVowel(lastLetter) && !isConsonant(lastLetter)) {
+    word.pop();
+    return word;
+  }
+  return word;
+};
+
 var translatePigLatinWord = function(inputWord) {
   var arrayWord = wordToArray(inputWord);
   var firstLetter = arrayWord[0];
+  arrayWord = checkPunctuation(arrayWord);
+  console.log(arrayWord);
 
   if (isVowel(firstLetter)) {
     var vowelTranslation = arrayWord.concat("-way");
